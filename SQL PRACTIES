@@ -1,0 +1,721 @@
+mysql> USE AMAZON;
+Database changed
+mysql> SHOW TABLES;
++------------------+
+| Tables_in_amazon |
++------------------+
+| customer         |
+| dept             |
+| emp              |
+| location         |
+| orders           |
+| pentagon         |
+| product          |
++------------------+
+7 rows in set (0.01 sec)
+
+mysql> SELECT * FROM CUSTOMER;
++-----+------------+-----------+------+----------+------------+
+| CID | FIRST_NAME | LAST_NAME | LID  | ORDER_ID | PRODUCT_ID |
++-----+------------+-----------+------+----------+------------+
+| 501 | SALMAN     | KHAN      |   12 |     1201 |        809 |
+| 502 | SHIVANI    | RAI       |    1 |     NULL |       NULL |
+| 503 | KIRAN      | RAJ       |    2 |     NULL |       NULL |
+| 504 | VIHAN      | PRASAD    |    7 |     NULL |       NULL |
+| 505 | ABHIJIT    | GOWDE     |   11 |     1111 |        801 |
+| 506 | KARAN      | BHAT      |    9 |     NULL |       NULL |
+| 507 | HEMA       | SHETTY    |    3 |     1127 |        805 |
+| 508 | PUNITH     | GOWDA     |    4 |     NULL |       NULL |
+| 509 | PATRICK    | JOHNSON   |   13 |     NULL |       NULL |
+| 510 | JEEVAN     | RAJ       |   10 |     NULL |       NULL |
+| 511 | SELVA      | MANI      |   12 |     1773 |        802 |
+| 512 | IRFAN      | MOHAMMED  |    5 |     NULL |       NULL |
++-----+------------+-----------+------+----------+------------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT * FROM LOCATION;
++-----+--------------+-----------+-------------+
+| LID | LOCATION     | CITY      | STATE       |
++-----+--------------+-----------+-------------+
+|   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+|   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+|   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+|   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+|   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+|   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+|   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+|   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+|   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+|  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+|  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+|  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+|  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+|  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+|  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
++-----+--------------+-----------+-------------+
+15 rows in set (0.00 sec)
+
+mysql> SELECT C.*,L.*
+    -> FROM CUSTOMER C LEFT JOIN LOCATION L
+    -> ON C.LID=L.LID;
++-----+------------+-----------+------+----------+------------+------+-------------+-----------+-------------+
+| CID | FIRST_NAME | LAST_NAME | LID  | ORDER_ID | PRODUCT_ID | LID  | LOCATION    | CITY      | STATE       |
++-----+------------+-----------+------+----------+------------+------+-------------+-----------+-------------+
+| 501 | SALMAN     | KHAN      |   12 |     1201 |        809 |   12 | ANDHERI     | MUMBAI    | MAHARASHTRA |
+| 502 | SHIVANI    | RAI       |    1 |     NULL |       NULL |    1 | VIJAYANAGAR | BANGALORE | KARNATAKA   |
+| 503 | KIRAN      | RAJ       |    2 |     NULL |       NULL |    2 | HEBBAL      | MYSORE    | KARNATAKA   |
+| 504 | VIHAN      | PRASAD    |    7 |     NULL |       NULL |    7 | RAIDURG     | HYDERABAD | TELANGANA   |
+| 505 | ABHIJIT    | GOWDE     |   11 |     1111 |        801 |   11 | SAIDAPET    | CHENNAI   | TAMIL_NADU  |
+| 506 | KARAN      | BHAT      |    9 |     NULL |       NULL |    9 | MARINA      | CHENNAI   | TAMIL_NADU  |
+| 507 | HEMA       | SHETTY    |    3 |     1127 |        805 |    3 | RAJAJINAGAR | BANGALORE | KARNATAKA   |
+| 508 | PUNITH     | GOWDA     |    4 |     NULL |       NULL |    4 | KORMANGALA  | BANGALORE | KARNATAKA   |
+| 509 | PATRICK    | JOHNSON   |   13 |     NULL |       NULL |   13 | JUHU        | MUMBAI    | MAHARASHTRA |
+| 510 | JEEVAN     | RAJ       |   10 |     NULL |       NULL |   10 | ANNA_NAGAR  | CHENNAI   | TAMIL_NADU  |
+| 511 | SELVA      | MANI      |   12 |     1773 |        802 |   12 | ANDHERI     | MUMBAI    | MAHARASHTRA |
+| 512 | IRFAN      | MOHAMMED  |    5 |     NULL |       NULL |    5 | KUVEPUNAGAR | MYSORE    | KARNATAKA   |
++-----+------------+-----------+------+----------+------------+------+-------------+-----------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> ^X^C
+mysql>  SELECT C.*,L.*
+    ->  FROM LOCATION L LEFT JOIN CUSTOMER C
+    -> ON L.LID=C.LID;
++------+------------+-----------+------+----------+------------+-----+--------------+-----------+-------------+
+| CID  | FIRST_NAME | LAST_NAME | LID  | ORDER_ID | PRODUCT_ID | LID | LOCATION     | CITY      | STATE       |
++------+------------+-----------+------+----------+------------+-----+--------------+-----------+-------------+
+|  502 | SHIVANI    | RAI       |    1 |     NULL |       NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+|  503 | KIRAN      | RAJ       |    2 |     NULL |       NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+|  507 | HEMA       | SHETTY    |    3 |     1127 |        805 |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+|  508 | PUNITH     | GOWDA     |    4 |     NULL |       NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+|  512 | IRFAN      | MOHAMMED  |    5 |     NULL |       NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| NULL | NULL       | NULL      | NULL |     NULL |       NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+|  504 | VIHAN      | PRASAD    |    7 |     NULL |       NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| NULL | NULL       | NULL      | NULL |     NULL |       NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+|  506 | KARAN      | BHAT      |    9 |     NULL |       NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+|  510 | JEEVAN     | RAJ       |   10 |     NULL |       NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+|  505 | ABHIJIT    | GOWDE     |   11 |     1111 |        801 |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+|  511 | SELVA      | MANI      |   12 |     1773 |        802 |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+|  501 | SALMAN     | KHAN      |   12 |     1201 |        809 |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+|  509 | PATRICK    | JOHNSON   |   13 |     NULL |       NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| NULL | NULL       | NULL      | NULL |     NULL |       NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| NULL | NULL       | NULL      | NULL |     NULL |       NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
++------+------------+-----------+------+----------+------------+-----+--------------+-----------+-------------+
+16 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM LOCATION L LEFT JOIN CUSTOMER C
+    -> ON L.LID=C.LID;
++-----+--------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+| LID | LOCATION     | CITY      | STATE       | CID  | FIRST_NAME | LAST_NAME | LID  | ORDER_ID | PRODUCT_ID |
++-----+--------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+|   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |  502 | SHIVANI    | RAI       |    1 |     NULL |       NULL |
+|   2 | HEBBAL       | MYSORE    | KARNATAKA   |  503 | KIRAN      | RAJ       |    2 |     NULL |       NULL |
+|   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |  507 | HEMA       | SHETTY    |    3 |     1127 |        805 |
+|   4 | KORMANGALA   | BANGALORE | KARNATAKA   |  508 | PUNITH     | GOWDA     |    4 |     NULL |       NULL |
+|   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |  512 | IRFAN      | MOHAMMED  |    5 |     NULL |       NULL |
+|   6 | AMEERPET     | HYDERABAD | TELANGANA   | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|   7 | RAIDURG      | HYDERABAD | TELANGANA   |  504 | VIHAN      | PRASAD    |    7 |     NULL |       NULL |
+|   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|   9 | MARINA       | CHENNAI   | TAMIL_NADU  |  506 | KARAN      | BHAT      |    9 |     NULL |       NULL |
+|  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |  510 | JEEVAN     | RAJ       |   10 |     NULL |       NULL |
+|  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |  505 | ABHIJIT    | GOWDE     |   11 |     1111 |        801 |
+|  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |  511 | SELVA      | MANI      |   12 |     1773 |        802 |
+|  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |  501 | SALMAN     | KHAN      |   12 |     1201 |        809 |
+|  13 | JUHU         | MUMBAI    | MAHARASHTRA |  509 | PATRICK    | JOHNSON   |   13 |     NULL |       NULL |
+|  14 | GOREGAON     | MUMBAI    | MAHARASHTRA | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|  15 | BORIVALI     | MUMBAI    | MAHARASHTRA | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
++-----+--------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+16 rows in set (0.00 sec)
+
+mysql>  SELECT *
+    ->  FROM LOCATION L LEFT JOIN CUSTOMER C
+    ->  ON L.LID=C.LID
+    -> WHERE C.LID IS NOT NULL;
++-----+-------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+| LID | LOCATION    | CITY      | STATE       | CID  | FIRST_NAME | LAST_NAME | LID  | ORDER_ID | PRODUCT_ID |
++-----+-------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+|  12 | ANDHERI     | MUMBAI    | MAHARASHTRA |  501 | SALMAN     | KHAN      |   12 |     1201 |        809 |
+|   1 | VIJAYANAGAR | BANGALORE | KARNATAKA   |  502 | SHIVANI    | RAI       |    1 |     NULL |       NULL |
+|   2 | HEBBAL      | MYSORE    | KARNATAKA   |  503 | KIRAN      | RAJ       |    2 |     NULL |       NULL |
+|   7 | RAIDURG     | HYDERABAD | TELANGANA   |  504 | VIHAN      | PRASAD    |    7 |     NULL |       NULL |
+|  11 | SAIDAPET    | CHENNAI   | TAMIL_NADU  |  505 | ABHIJIT    | GOWDE     |   11 |     1111 |        801 |
+|   9 | MARINA      | CHENNAI   | TAMIL_NADU  |  506 | KARAN      | BHAT      |    9 |     NULL |       NULL |
+|   3 | RAJAJINAGAR | BANGALORE | KARNATAKA   |  507 | HEMA       | SHETTY    |    3 |     1127 |        805 |
+|   4 | KORMANGALA  | BANGALORE | KARNATAKA   |  508 | PUNITH     | GOWDA     |    4 |     NULL |       NULL |
+|  13 | JUHU        | MUMBAI    | MAHARASHTRA |  509 | PATRICK    | JOHNSON   |   13 |     NULL |       NULL |
+|  10 | ANNA_NAGAR  | CHENNAI   | TAMIL_NADU  |  510 | JEEVAN     | RAJ       |   10 |     NULL |       NULL |
+|  12 | ANDHERI     | MUMBAI    | MAHARASHTRA |  511 | SELVA      | MANI      |   12 |     1773 |        802 |
+|   5 | KUVEPUNAGAR | MYSORE    | KARNATAKA   |  512 | IRFAN      | MOHAMMED  |    5 |     NULL |       NULL |
++-----+-------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+12 rows in set (0.00 sec)
+
+mysql>
+mysql> mysql>  SELECT *
+    ->     ->  FROM LOCATION L LEFT JOIN CUSTOMER C
+    ->     ->  ON L.LID=C.LID
+    ->     -> WHERE C.LID IS NOT NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql>  SELECT *
+    ->  FROM LOCATION L LEFT JOIN CUSTOMER C
+    ->  ON L.LID=C' at line 1
+mysql> SELECT *
+    ->  ON L.LID=C.LIDFROM LOCATION L LEFT JOIN CUSTOMER C
+    ->      WHERE C.LID IS NULL;^C
+mysql> SELECT *
+    -> FROM L.LOCATION LEFT JOIN C.CUSTOMER
+    -> ON L.LID = C.LID
+    -> ^C
+mysql> SELECT *
+    -> FROM LOCATION L LEFT JOIN CUSTOMER C
+    -> ON L.LID=C.LID
+    -> WHERE C.LID IS NULL;
++-----+--------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+| LID | LOCATION     | CITY      | STATE       | CID  | FIRST_NAME | LAST_NAME | LID  | ORDER_ID | PRODUCT_ID |
++-----+--------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+|   6 | AMEERPET     | HYDERABAD | TELANGANA   | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|  14 | GOREGAON     | MUMBAI    | MAHARASHTRA | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|  15 | BORIVALI     | MUMBAI    | MAHARASHTRA | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
++-----+--------------+-----------+-------------+------+------------+-----------+------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM PRODUCT;
++------------+----------+----------+
+| PRODUCT_ID | PNAME    | PRICE    |
++------------+----------+----------+
+|        801 | LIPSTICK |  2000.00 |
+|        802 | CHAIN    | 20000.00 |
+|        803 | WATCH    | 15000.00 |
+|        804 | EAR PODS |  1500.00 |
+|        805 | OLDMONK  |  1000.00 |
+|        806 | IPHONE   |  1300.00 |
+|        807 | WALLET   |  2500.00 |
+|        808 | PTron    |   800.00 |
+|        809 | TOWEL    |  1750.00 |
++------------+----------+----------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM PRODUCT P LEFT JOIN CUSTOMER C
+    -> ON P.PRODUCT_ID = C.PRODUCT_ID;
++------------+----------+----------+------+------------+-----------+------+----------+------------+
+| PRODUCT_ID | PNAME    | PRICE    | CID  | FIRST_NAME | LAST_NAME | LID  | ORDER_ID | PRODUCT_ID |
++------------+----------+----------+------+------------+-----------+------+----------+------------+
+|        801 | LIPSTICK |  2000.00 |  505 | ABHIJIT    | GOWDE     |   11 |     1111 |        801 |
+|        802 | CHAIN    | 20000.00 |  511 | SELVA      | MANI      |   12 |     1773 |        802 |
+|        803 | WATCH    | 15000.00 | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|        804 | EAR PODS |  1500.00 | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|        805 | OLDMONK  |  1000.00 |  507 | HEMA       | SHETTY    |    3 |     1127 |        805 |
+|        806 | IPHONE   |  1300.00 | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|        807 | WALLET   |  2500.00 | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|        808 | PTron    |   800.00 | NULL | NULL       | NULL      | NULL |     NULL |       NULL |
+|        809 | TOWEL    |  1750.00 |  501 | SALMAN     | KHAN      |   12 |     1201 |        809 |
++------------+----------+----------+------+------------+-----------+------+----------+------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT P.PNAME
+    -> FROM PRODUCT P LEFT JOIN CUSTOMER C
+    -> ON P.PRODUCT_ID = C.PRODUCT_ID;
++----------+
+| PNAME    |
++----------+
+| LIPSTICK |
+| CHAIN    |
+| WATCH    |
+| EAR PODS |
+| OLDMONK  |
+| IPHONE   |
+| WALLET   |
+| PTron    |
+| TOWEL    |
++----------+
+9 rows in set (0.00 sec)
+
+mysql>  SELECT P.PNAME
+    ->  FROM PRODUCT P LEFT JOIN CUSTOMER C
+    -> ^C
+mysql>  SELECT P.PNAME
+    ->  FROM PRODUCT P LEFT JOIN CUSTOMER C
+    ->  ON P.PRODUCT_ID = C.PRODUCT_ID
+    -> WHERE C.LID IS NULL;
++----------+
+| PNAME    |
++----------+
+| WATCH    |
+| EAR PODS |
+| IPHONE   |
+| WALLET   |
+| PTron    |
++----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT E1.FNAME,E1.JOB,E2.FNAME,E2.JOB
+    -> FROM EMP E1 JOIN EMP E2
+    -> ON E1.MGR=E2.EID;
++---------+------------+--------+------------+
+| FNAME   | JOB        | FNAME  | JOB        |
++---------+------------+--------+------------+
+| JAHNAVI | DISPATCHER | SAMEER | MANAGER    |
+| RAHUL   | MANAGER    | SAMEER | MANAGER    |
+| SAMEER  | MANAGER    | MURALI | DISPATCHER |
+| ABHIJIT | DISPATCHER | SAMEER | MANAGER    |
+| KARAN   | SALESMAN   | RAHUL  | MANAGER    |
+| MURALI  | DISPATCHER | SAMEER | MANAGER    |
+| DHARANI | DEVELOPER  | MURALI | DISPATCHER |
+| RASHMI  | SALESMAN   | RAHUL  | MANAGER    |
+| FARIYA  | DEVELOPER  | MURALI | DISPATCHER |
+| PRIYA   | ACCOUNTANT | MURALI | DISPATCHER |
+| AMAN    | SALESMAN   | RAHUL  | MANAGER    |
++---------+------------+--------+------------+
+11 rows in set (0.00 sec)
+
+mysql>  SELECT E1.FNAME,E1.JOB,E2.FNAME,E2.JOB
+    ->  FROM EMP E1 JOIN EMP E2
+    ->  ON E1.MGR=E2.EID
+    -> WHERE E1.SAL>35000AND E2.SAL<500000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'E2.SAL<500000' at line 4
+mysql>  SELECT E1.FNAME,E1.JOB,E2.FNAME,E2.JOB
+    ->  FROM EMP E1 JOIN EMP E2
+    ->  ON E1.MGR=E2.EID
+    -> WHERE E1.SAL>35000 AND E2.SAL<500000;
++---------+------------+--------+------------+
+| FNAME   | JOB        | FNAME  | JOB        |
++---------+------------+--------+------------+
+| JAHNAVI | DISPATCHER | SAMEER | MANAGER    |
+| RAHUL   | MANAGER    | SAMEER | MANAGER    |
+| SAMEER  | MANAGER    | MURALI | DISPATCHER |
+| ABHIJIT | DISPATCHER | SAMEER | MANAGER    |
+| KARAN   | SALESMAN   | RAHUL  | MANAGER    |
+| MURALI  | DISPATCHER | SAMEER | MANAGER    |
+| RASHMI  | SALESMAN   | RAHUL  | MANAGER    |
+| AMAN    | SALESMAN   | RAHUL  | MANAGER    |
++---------+------------+--------+------------+
+8 rows in set (0.05 sec)
+
+mysql> SELECT E1.EMP,E1.SAL,E2.FNAME,E2.SAL
+    -> FROM EMP E1 JOIN EMP E2
+    -> ON E1.MGR=E2.EID
+    -> WHERE E1.SAL>35000 AND E2.SAL<500000;
+ERROR 1054 (42S22): Unknown column 'E1.EMP' in 'field list'
+mysql>  SELECT E1.FNAME,E1.SAL,E2.FNAME,E2.SAL
+    -> FROM EMP E1 JOIN EMP E2
+    -> ON E1.MGR=E2.EID
+    -> WHERE E1.SAL>35000 AND E2.SAL<500000;
++---------+-----------+--------+-----------+
+| FNAME   | SAL       | FNAME  | SAL       |
++---------+-----------+--------+-----------+
+| JAHNAVI |  45000.00 | SAMEER |  90000.00 |
+| RAHUL   | 100000.00 | SAMEER |  90000.00 |
+| SAMEER  |  90000.00 | MURALI |  45000.00 |
+| ABHIJIT |  50000.00 | SAMEER |  90000.00 |
+| KARAN   |  45000.00 | RAHUL  | 100000.00 |
+| MURALI  |  45000.00 | SAMEER |  90000.00 |
+| RASHMI  |  45000.00 | RAHUL  | 100000.00 |
+| AMAN    |  40000.00 | RAHUL  | 100000.00 |
++---------+-----------+--------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT E1.FNAME,E1.DOB,E2.FNAME,E2.DOB
+    -> FROM EMP E1 JOIN EMP E2
+    -> ON E1.MGR=E2.EID
+    -> WHERE E1.DOB<E2.DOB;
++--------+------------+--------+------------+
+| FNAME  | DOB        | FNAME  | DOB        |
++--------+------------+--------+------------+
+| RAHUL  | 1991-02-19 | SAMEER | 1995-04-20 |
+| SAMEER | 1995-04-20 | MURALI | 1998-06-01 |
+| PRIYA  | 1998-03-02 | MURALI | 1998-06-01 |
++--------+------------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM DEPT;
++-----+------------+------+
+| DNO | DNAME      | LID  |
++-----+------------+------+
+| 110 | DELIVERY   |    2 |
+| 111 | MARKETING  |    1 |
+| 112 | ACCOUNTING |    4 |
+| 113 | TECHNICAL  |   10 |
+| 114 | HR         |   12 |
++-----+------------+------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT E1.FNAME,E2.FNAME ,D.DNAME
+    -> FROM EMP E1 JOIN EMP E2 JOIN DEPT D
+    -> ON E1.MGR=E2.EID AND E2.DNO=D.DNO;
++---------+--------+-----------+
+| FNAME   | FNAME  | DNAME     |
++---------+--------+-----------+
+| JAHNAVI | SAMEER | DELIVERY  |
+| RAHUL   | SAMEER | DELIVERY  |
+| SAMEER  | MURALI | DELIVERY  |
+| ABHIJIT | SAMEER | DELIVERY  |
+| KARAN   | RAHUL  | MARKETING |
+| MURALI  | SAMEER | DELIVERY  |
+| DHARANI | MURALI | DELIVERY  |
+| RASHMI  | RAHUL  | MARKETING |
+| FARIYA  | MURALI | DELIVERY  |
+| PRIYA   | MURALI | DELIVERY  |
+| AMAN    | RAHUL  | MARKETING |
++---------+--------+-----------+
+11 rows in set (0.00 sec)
+
+mysql>  SELECT E1.FNAME,E2.FNAME ,D.DNAME
+    ->  FROM EMP E1 JOIN EMP E2 JOIN DEPT D
+    -> ON E1.MGR=E2.EID AND E1.DNO=D.DNO;
++---------+--------+------------+
+| FNAME   | FNAME  | DNAME      |
++---------+--------+------------+
+| JAHNAVI | SAMEER | DELIVERY   |
+| RAHUL   | SAMEER | MARKETING  |
+| SAMEER  | MURALI | DELIVERY   |
+| ABHIJIT | SAMEER | DELIVERY   |
+| KARAN   | RAHUL  | MARKETING  |
+| MURALI  | SAMEER | DELIVERY   |
+| DHARANI | MURALI | MARKETING  |
+| RASHMI  | RAHUL  | MARKETING  |
+| FARIYA  | MURALI | TECHNICAL  |
+| PRIYA   | MURALI | ACCOUNTING |
+| AMAN    | RAHUL  | MARKETING  |
++---------+--------+------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT E1.FNAME,E1.JOB,D1.DNAME,E2.FNAME,E2.JOB,D2.DNAME
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D1 INNER JOIN DEPT D2
+    -> ON E1.MGR=E2.EID AND E1.DNO=D1.DNO AND E2.DNO=D2.DNO
+    -> WHERE E1.JOB IN("MANAGER",'SALESMAN') AND D1.DNAME IN('MARKETING','DELIVERY') AND E2.JOB="MANAGER";
++--------+----------+-----------+--------+---------+-----------+
+| FNAME  | JOB      | DNAME     | FNAME  | JOB     | DNAME     |
++--------+----------+-----------+--------+---------+-----------+
+| RAHUL  | MANAGER  | MARKETING | SAMEER | MANAGER | DELIVERY  |
+| KARAN  | SALESMAN | MARKETING | RAHUL  | MANAGER | MARKETING |
+| RASHMI | SALESMAN | MARKETING | RAHUL  | MANAGER | MARKETING |
+| AMAN   | SALESMAN | MARKETING | RAHUL  | MANAGER | MARKETING |
++--------+----------+-----------+--------+---------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT E1.FNAME,D.DNAME,L.LOCATION, E2.NAME,D.NAME,L.LOCATION
+    -> ^C
+mysql> SELECT E1.FNAME,D1.DNAME,L.LOCATION, E2.NAME,D2.NAME,L.LOCATION
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D1 INNER JOIN DEPT D2^C
+mysql> SELECT E1.FNAME,D.DNAME,L.LOCATION, E2.NAME,D.NAME,L.LOCATION
+    ->  FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D INNER JOIN LOCATION L
+    -> ON E1.MGR=E2.EID AND E1.DNO=D.DNO AND E2.DNO=D2.DNOIN LOCATIO^C
+mysql>
+mysql>
+mysql> SELECT E1.FNAME,D1.DNAME,L1.LOCATION,E2.FNAME,D2.DNAME,L2.LOCATION
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D1 INNER JOIN DEPT D2 INNER JOIN LOCATION L1 INNER JOIN LOCATION L2
+    -> ON E1.MRG=E2.EID AND E1.DNO=D1.DNO AND D1.LID=L1.LID AND D2.LID=L2.LID AND E2.DNO=D2.DNO;
+ERROR 1054 (42S22): Unknown column 'E1.MRG' in 'on clause'
+mysql> SELECT E1.FNAME,D1.DNAME,L1.LOCATION,E2.FNAME,D2.DNAME,L2.LOCATIONFROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D1 INNER JOIN DEPT D2 INNER JOIN LOCATION L1 INNER JOIN LOCATION L2
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D1 INNER JOIN DEPT D2 INNER JOIN LOCATION L1 INNER JOIN LOCATION L2^C
+mysql>  SELECT E1.FNAME,D1.DNAME,L1.LOCATION,E2.FNAME,D2.DNAME,L2.LOCATION
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D1 INNER JOIN DEPT D2 INNER JOIN LOCATION L1 INNER JOIN LOCATION L2
+    ->  ON E1.MGR=E2.EID AND E1.DNO=D1.DNO AND D1.LID=L1.LID AND D2.LID=L2.LID AND E2.DNO=D2.DNO;
++---------+------------+-------------+--------+-----------+-------------+
+| FNAME   | DNAME      | LOCATION    | FNAME  | DNAME     | LOCATION    |
++---------+------------+-------------+--------+-----------+-------------+
+| JAHNAVI | DELIVERY   | HEBBAL      | SAMEER | DELIVERY  | HEBBAL      |
+| RAHUL   | MARKETING  | VIJAYANAGAR | SAMEER | DELIVERY  | HEBBAL      |
+| SAMEER  | DELIVERY   | HEBBAL      | MURALI | DELIVERY  | HEBBAL      |
+| ABHIJIT | DELIVERY   | HEBBAL      | SAMEER | DELIVERY  | HEBBAL      |
+| KARAN   | MARKETING  | VIJAYANAGAR | RAHUL  | MARKETING | VIJAYANAGAR |
+| MURALI  | DELIVERY   | HEBBAL      | SAMEER | DELIVERY  | HEBBAL      |
+| DHARANI | MARKETING  | VIJAYANAGAR | MURALI | DELIVERY  | HEBBAL      |
+| RASHMI  | MARKETING  | VIJAYANAGAR | RAHUL  | MARKETING | VIJAYANAGAR |
+| FARIYA  | TECHNICAL  | ANNA_NAGAR  | MURALI | DELIVERY  | HEBBAL      |
+| PRIYA   | ACCOUNTING | KORMANGALA  | MURALI | DELIVERY  | HEBBAL      |
+| AMAN    | MARKETING  | VIJAYANAGAR | RAHUL  | MARKETING | VIJAYANAGAR |
++---------+------------+-------------+--------+-----------+-------------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT E1.FNAME,E1.FNAME,L.LOCATION
+    -> ^C
+mysql> SELECT L2.LOCATION
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D2 INNER JOIN LOCATION
+    -> ON E1.MGR=E2.EID AND E2.DNO=D2.DNO AND D2.LID=L2.LID
+    -> WHERE E1.FNAME="AMAN";
+ERROR 1054 (42S22): Unknown column 'L2.LOCATION' in 'field list'
+mysql> SELECT L2.LOCATION
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D2 INNER JOIN LOCATION L1
+    -> ON E1.MGR=E2.EID AND E2.DNO=D2.DNO AND D2.LID=L2.LID
+    -> WHERE E1.FNAME="AMAN";
+ERROR 1054 (42S22): Unknown column 'L2.LOCATION' in 'field list'
+mysql> SELECT L2.LOCATION
+    -> FROM EMP E1 JOIN EMP E2 INNER JOIN DEPT D2 INNER JOIN LOCATION L2
+    -> ON E1.MGR=E2.EID AND E2.DNO=D2.DNO AND D2.LID=L2.LID
+    -> WHERE E1.FNAME="AMAN";
++-------------+
+| LOCATION    |
++-------------+
+| VIJAYANAGAR |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM EMP
+    -> WHERE SAL>(SELECT SAL FROM EMP WHERE FNAME="KIRAN");
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+
+| EID  | FNAME   | LNAME    | DOB        | GENDER | JOB        | MGR  | DOJ        | SAL       | COMM    | DNO  | CID  |
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+
+11 rows in set (0.06 sec)
+
+mysql> SELECT E1.*
+    -> FROM EMP E1 JOIN EMP E2
+    -> ON E1.SAL>E2.SAL
+    -> WHERE E2.FNAME="KIRAN";
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+
+| EID  | FNAME   | LNAME    | DOB        | GENDER | JOB        | MGR  | DOJ        | SAL       | COMM    | DNO  | CID  |
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+
+11 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMP E NATURAL JOIN DEPT D;
++------+------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------------+------+
+| DNO  | EID  | FNAME   | LNAME    | DOB        | GENDER | JOB        | MGR  | DOJ        | SAL       | COMM    | CID  | DNAME      | LID  |
++------+------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------------+------+
+|  110 | 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 | NULL | DELIVERY   |    2 |
+|  111 | 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL | NULL | MARKETING  |    1 |
+|  110 | 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL | NULL | DELIVERY   |    2 |
+|  113 | 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL | NULL | TECHNICAL  |   10 |
+|  110 | 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL | NULL | DELIVERY   |    2 |
+|  111 | 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL | NULL | MARKETING  |    1 |
+|  110 | 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 | NULL | DELIVERY   |    2 |
+|  111 | 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 | NULL | MARKETING  |    1 |
+|  111 | 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 | NULL | MARKETING  |    1 |
+|  113 | 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 | NULL | TECHNICAL  |   10 |
+|  112 | 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 | NULL | ACCOUNTING |    4 |
+|  111 | 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL | NULL | MARKETING  |    1 |
++------+------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------------+------+
+12 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMP E NATURAL JOIN LOCATION L;
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+-----+--------------+-----------+-------------+
+| EID  | FNAME   | LNAME    | DOB        | GENDER | JOB        | MGR  | DOJ        | SAL       | COMM    | DNO  | CID  | LID | LOCATION     | CITY      | STATE       |
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+-----+--------------+-----------+-------------+
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   1 | VIJAYANAGAR  | BANGALORE | KARNATAKA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   2 | HEBBAL       | MYSORE    | KARNATAKA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   3 | RAJAJINAGAR  | BANGALORE | KARNATAKA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   4 | KORMANGALA   | BANGALORE | KARNATAKA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   5 | KUVEPUNAGAR  | MYSORE    | KARNATAKA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   6 | AMEERPET     | HYDERABAD | TELANGANA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   7 | RAIDURG      | HYDERABAD | TELANGANA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   8 | DILSUKHNAGAR | HYDERABAD | TELANGANA   |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |   9 | MARINA       | CHENNAI   | TAMIL_NADU  |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |  10 | ANNA_NAGAR   | CHENNAI   | TAMIL_NADU  |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |  11 | SAIDAPET     | CHENNAI   | TAMIL_NADU  |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |  12 | ANDHERI      | MUMBAI    | MAHARASHTRA |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |  13 | JUHU         | MUMBAI    | MAHARASHTRA |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |  14 | GOREGAON     | MUMBAI    | MAHARASHTRA |
+| 2201 | KIRAN   | RAJ      | 1999-09-21 | M      | ACCOUNTANT | NULL | 2022-08-28 |  30000.00 | 3600.00 |  115 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 2104 | AMAN    | RAI      | 1998-08-15 | M      | SALESMAN   | 1701 | 2021-12-26 |  40000.00 |    NULL |  111 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 2103 | PRIYA   | SHETTY   | 1998-03-02 | F      | ACCOUNTANT | 2001 | 2021-05-01 |  32000.00 | 3600.00 |  112 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 2102 | FARIYA  | TAJ      | 1999-01-03 | F      | DEVELOPER  | 2001 | 2021-03-01 |  32000.00 | 3600.00 |  113 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 2101 | RASHMI  | GOWDA    | 1995-11-10 | F      | SALESMAN   | 1701 | 2021-01-02 |  45000.00 | 3000.00 |  111 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 2002 | DHARANI | PATIL    | 1998-11-10 | F      | DEVELOPER  | 2001 | 2021-06-21 |  30000.00 | 3000.00 |  111 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 2001 | MURALI  | KRISHNAN | 1998-06-01 | M      | DISPATCHER | 1702 | 2020-03-15 |  45000.00 | 3000.00 |  110 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 1903 | KARAN   | BHAT     | 1997-12-26 | M      | SALESMAN   | 1701 | 2019-12-28 |  45000.00 |    NULL |  111 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 1902 | ABHIJIT | GOWDA    | 1997-12-25 | M      | DISPATCHER | 1702 | 2019-12-26 |  50000.00 |    NULL |  110 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 1901 | SHIVANI | RAI      | 1998-11-07 | F      | TESTER     | 1601 | 2019-12-12 |  45000.00 |    NULL |  113 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 1702 | SAMEER  | KHAN     | 1995-04-20 | M      | MANAGER    | 2001 | 2017-07-17 |  90000.00 |    NULL |  110 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 1701 | RAHUL   | MUKARJEE | 1991-02-19 | M      | MANAGER    | 1702 | 2017-04-17 | 100000.00 |    NULL |  111 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
+| 1001 | JAHNAVI | NAIK     | 1996-04-11 | M      | DISPATCHER | 1702 | 2020-02-15 |  45000.00 | 1000.00 |  110 | NULL |  15 | BORIVALI     | MUMBAI    | MAHARASHTRA |
++------+---------+----------+------------+--------+------------+------+------------+-----------+---------+------+------+-----+--------------+-----------+-------------+
+195 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM EMP E NATURAL JOIN EMP F;
+Empty set (0.00 sec)
+
+mysql> ^S^S
